@@ -1036,9 +1036,10 @@ MainController::ParseArchive()
 	if(fView->Lock()){
 		flags	 = fView->Flags();
 		fView->SetFlags( flags | B_NOT_RESIZABLE);
+		fView->SetSortingSubscriptions(true);
 		fView->Unlock();
 	}
-	
+
 	bigtime_t start = real_time_clock_usecs();
 	
 
@@ -1071,6 +1072,7 @@ MainController::ParseArchive()
 	
 	if(fView->Lock()){
 		fView->SetFlags( flags );
+		fView->SetSortingSubscriptions(false);
 		fView->Unlock();
 	}
 	
@@ -1155,10 +1157,10 @@ MainController::CreateChannelItem(BEntry* e,BMessage* cache)
 
 
 	if(fView->Lock()){
-		fView->SetSortingSubscriptions(true);
+		//fView->SetSortingSubscriptions(true);
 		fView->AddSubscription(row,group);
 		fModel->fChInfo.AddItem(row->fRef,row);
-		fView->SetSortingSubscriptions(false);
+		//fView->SetSortingSubscriptions(false);
 		fView->Unlock();
 	}
 	
@@ -1899,8 +1901,6 @@ MainController::ParseChannel(entry_ref ref) {
 	} 
 	else
 		delete params;
-		
-	
 }
 
 int32	
